@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import axios from '../api/axios'; // Import your Axios instance
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import './LoginPage.css';
+
+
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -29,6 +34,7 @@ function LoginPage() {
 
   return (
     <div>
+      <Navbar />
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input 
@@ -54,6 +60,7 @@ function LoginPage() {
         />
         <button type="submit">Login</button>
       </form>
+      <Footer />
     </div>
   );
 }

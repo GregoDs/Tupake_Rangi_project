@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios'; // Import your Axios instance
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import Navbar from './Navbar';
+import Footer from './Footer';
+
 
 function AdminDashboard() {
   const [name, setName] = useState('');
@@ -100,6 +103,7 @@ function AdminDashboard() {
 
   return (
     <div>
+       <Navbar />
       <h2>Admin Dashboard</h2>
       <form onSubmit={selectedPaint ? handleUpdatePaint : handleAddPaint}>
         <div>
@@ -157,6 +161,7 @@ function AdminDashboard() {
           </li>
         ))}
       </ul>
+      <Footer />
     </div>
   );
 }

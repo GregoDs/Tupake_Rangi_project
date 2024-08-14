@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from '../api/axios';  // Import the Axios instance
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import './RegisterPage.css';
+
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -24,6 +28,7 @@ function RegisterPage() {
 
   return (
     <div>
+      <Navbar />
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <input 
@@ -49,6 +54,7 @@ function RegisterPage() {
         />
         <button type="submit">Register</button>
       </form>
+      <Footer />
     </div>
   );
 }
