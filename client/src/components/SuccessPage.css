@@ -1,0 +1,63 @@
+/* General Page Styles */
+
+  
+  /* Success Page Container */
+  .success-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Group_140737.jpg?v=1689247518&width=1500');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  /* Success Message */
+  .success-page h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    padding-bottom: 1rem;
+  }
+  
+  .success-page p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }
+  
+  /* Buttons */
+  .success-page button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .success-page button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .success-page h2 {
+      font-size: 2rem;
+    }
+  
+    .success-page p {
+      font-size: 1rem;
+    }
+  
+    .success-page button {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+  

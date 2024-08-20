@@ -1,77 +1,254 @@
-/* Homepage.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.homepage-header {
+  position: relative;
+  height: 110vh; /* 45% of viewport height */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  animation: slide 5s infinite; /* Adjust the timing to match your desired duration */
+}
+
+@keyframes slide {
+  0% {
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Paint_BG.jpg?v=1689247477&width=1500');
+  }
+  25% {
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Paint_BG.jpg?v=1689247477&width=1500'); /* Replace with your second image URL */
+  }
+  50% {
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Paint_BG.jpg?v=1689247477&width=1500'); /* Replace with your third image URL */
+  }
+  75% {
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Paint_BG.jpg?v=1689247477&width=1500'); /* Replace with your fourth image URL */
+  }
+  100% {
+    background-image: url('https://dt-paintpros.myshopify.com/cdn/shop/files/Paint_BG.jpg?v=1689247477&width=1500'); /* Cycle back to the first image */
+  }
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-section button {
+  background-color: #ff6f61;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.hero-section button:hover {
+  background-color: #ff4e3f;
+}
+
 main {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h2 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .products {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .products-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .product-card img {
-    max-width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-  }
-  
-  .product-card h3 {
-    font-size: 18px;
-    color: #333;
-    margin: 10px 0;
-  }
-  
-  .product-card p {
-    font-size: 16px;
-    color: #555;
-    margin: 5px 0;
-  }
-  
-  .product-card button {
-    background-color: #2c3e50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.2s;
-  }
-  
-  .product-card button:hover {
-    background-color: #1a252f;
-  }
-  
-  @media (max-width: 768px) {
-    .products-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-  
+  padding: 20px;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 200px;
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-card button {
+  background-color: #ff6f61;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.product-card button:hover {
+  background-color: #ff4e3f;
+}
+.grid-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Adjust padding as needed */
+}
+
+.grid-banner-image {
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  border: 2px solid #ddd; /* Optional: border to define the image area */
+  border-radius: 10px; /* Optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
+}
+
+/* Homepage.css */
+.paint-collections {
+  display: flex;
+  justify-content: space-around;
+  margin: 90px 0;
+  height: 70vh; /* 45% of viewport height */
+}
+
+.paint-link {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  text-decoration: none; /* Remove underline from the link */
+  color: inherit; /* Inherit color from parent element, usually black or any color you want */
+}
+
+.paint-link.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.paint-image {
+  max-width: 90%;
+  height: auto;
+}
+
+.paint-header {
+  margin-top: 10px;
+  font-size: 1.2rem; /* Adjust font size as needed */
+  font-weight: bold; /* Make the heading bold if desired */
+}
+
+.hero-section {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif; /* Fallback to Roboto if Helvetica is not available */
+  text-align: center;
+  padding: 20px; /* Adjust padding as needed */
+}
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* Center text horizontally */
+  margin: 0 auto; /* Center section horizontally if you need it */
+  padding: 20px; /* Add padding if needed */
+}
+
+.hero-section h1 {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-size: 2.5rem; /* Adjust font size as needed */
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-description {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-size: 1rem; /* Adjust font size as needed */
+  color: #f0e9e9; /* Light grey color for the text */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  max-width: 800px; /* Adjust as needed */
+  line-height: 1.6;
+}
+
+
+
+
+.shop-now-button:hover {
+  background-color: #ca3116;
+}
+
+
+.paint-calculator-section {
+  background-image: url('https://www.duracoat.com/sites/default/files/2023-02/Paintcalculator-desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 110px 0; /* Increased padding to make the container larger */
+  margin: 20px 0;
+  height: 50vh;
+}
+
+.paint-calculator-content {
+  display: inline-block;
+  padding: 30px; /* Larger content area */
+  border-radius: 8px;
+  font-size: 1.2rem; /* Increased font size */
+  text-align: center; /* Center-justify text */
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+}
+
+
+.paint-calculator-button {
+  display: inline-block;
+  padding: 12px 30px; /* Increased padding for a more rectangular button */
+  font-size: 1rem;
+  color: white;
+  background-color: #da3113; /* Bootstrap primary color */
+  border: none;
+  border-radius: 0; /* Remove border radius for a rectangular shape */
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.paint-calculator-button:hover {
+  background-color: #e65b0a; /* Darker shade for hover effect */
+}
+
+
+.inspiration-gallery {
+  text-align: center; /* Center the text */
+  margin: 50px 0; /* Add some spacing around the gallery */
+}
+
+.inspiration-gallery h2 {
+  font-weight: bold; /* Make the h2 bold */
+  position: relative; /* Position relative to place dots below */
+  display: inline-block; /* Ensure the h2 takes only the space of its content */
+  margin-bottom: 20px; /* Add space below the h2 */
+}
+
+.inspiration-gallery h2::after {
+  content: '...'; /* Add the dots */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Center the dots */
+  bottom: -10px; /* Position the dots below the h2 */
+  font-weight: normal; /* Regular weight for the dots */
+  letter-spacing: 5px; /* Spacing between the dots */
+}
+
+.inspiration-gallery p {
+  margin-bottom: 30px; /* Add space below the paragraph */
+}
+
+.gallery-images {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the images */
+  gap: 20px; /* Add gap/margin between images */
+}
+
+.gallery-image {
+  max-width: 100%; /* Ensure the images do not exceed their container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Optional: Add some rounding to the image corners */
+}

@@ -5,8 +5,6 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './LoginPage.css';
 
-
-
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,32 +33,41 @@ function LoginPage() {
   return (
     <div>
       <Navbar />
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-        />
-        <input 
-          type="text" 
-          placeholder="Role" 
-          value={role} 
-          onChange={(e) => setRole(e.target.value)} 
-          required 
-        />
-        <button type="submit">Login</button>
-      </form>
-      <Footer />
+      <main>
+        <div className="login-container">
+          <h2>Login</h2>
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+            <input 
+              type="text" 
+              placeholder="Role" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)} 
+              required 
+            />
+
+            <div className="not-registered-question">
+              <p>Not registered? <a href="/register">Sign up here</a></p>
+            </div>
+
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </main>
+      <Footer className="footer" />
     </div>
   );
 }

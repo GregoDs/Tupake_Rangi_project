@@ -5,11 +5,9 @@ from flask_cors import CORS
 import stripe
 import paypalrestsdk
 
-
 # Initialize SQLAlchemy and Migrate outside the create_app function
 db = SQLAlchemy()
 migrate = Migrate()
-
 
 stripe.api_key = 'sk_test_51NhQVmGSMQUybJjfdMIwI0bgWR85hnC4RWIzozgB5VG8t32eDuf8zq829MZVdvq5SnkMC8YyEWDGSsgZGYpo7Zch003blsXJDR'
 
@@ -25,8 +23,7 @@ def create_app():
     # Enable CORS for all routes
     CORS(app, supports_credentials=True)
 
-
-     # Configure PayPal SDK
+    # Configure PayPal SDK
     paypalrestsdk.configure({
         "mode": "sandbox",  # Change to "live" for production
         "client_id": "Ab-cjijvL3H4mWqn_Vt4g1JN_vwrWUbwTupqHkDvjcNI7gVUk8b92D6o4QqmQUJomxj-NDvdhXBDWV0L",
@@ -227,125 +224,112 @@ def create_app():
             paint_id = data['paint_id']
             if 'cart' in session:
                 cart = session['cart']
-                session['cart'] = [item for item in cart if item['paint_id'] != paint_id]
+                cart = [item for item in cart if item['paint_id'] != paint_id]
+                session['cart'] = cart
                 session.modified = True
-            return jsonify({"message": "Item removed from cart"}), 200
-        return jsonify({"error": "Invalid request"}), 400
+                return jsonify({"message": "Item removed from cart"}), 200
+            return jsonify({"error": "Cart not found"}), 404
+        return jsonify({"error": "Missing paint_id"}), 400
 
-    @app.route('/cart/count', methods=['GET'])
-    def get_cart_count():
+    def calculate_cart_total():
+        # Implement this function to calculate the total amount of items in the cart
+        total = 0
         if 'cart' in session:
-            return jsonify({'count': len(session['cart'])}), 200
-        return jsonify({'count': 0}), 200
+            for item in session['cart']:
+                total += item['price'] * item['quantity']
+        return total
+    
+    
+    @app.route('/cart/count', methods=['GET'])
+    def cart_count():
+        cart = session.get('cart', [])
+        count = sum(item['quantity'] for item in cart)
+        return jsonify({"count": count}), 200
 
-    @app.route('/orders', methods=['POST'])
-    def create_order():
+
+    @app.route('/checkout', methods=['POST'])
+    def checkout():
+        # Logic for handling checkout (e.g., create an order)
         data = request.get_json()
-        order = Order(user_id=session.get('user_id'))
-        db.session.add(order)
-        db.session.commit()
-        for item in session.get('cart', []):
-            order_item = OrderItem(
-                order_id=order.id,
-                paint_id=item['paint_id'],
-                quantity=item['quantity']
-            )
-            db.session.add(order_item)
-        db.session.commit()
-        session.pop('cart', None)  # Clear the cart after order
-        return jsonify({"message": "Order placed successfully"}), 201
+        payment_method = data.get('payment_method')
+
+        if payment_method == 'stripe':
+            # Stripe payment processing
+            amount = calculate_cart_total()  # Implement this function to calculate the total
+            # Handle Stripe payment logic here
+            return jsonify({"message": "Stripe payment processed"}), 200
+
+        elif payment_method == 'paypal':
+            # PayPal payment processing
+            amount = calculate_cart_total()  # Implement this function to calculate the total
+            # Handle PayPal payment logic here
+            return jsonify({"message": "PayPal payment processed"}), 200
+
+        return jsonify({"error": "Invalid payment method"}), 400
     
 
-
-    # Stripe Checkout Session route
     @app.route('/create-checkout-session', methods=['POST'])
     def create_checkout_session():
         try:
-            data = request.json
-            print("Received data:", data)
-            line_items = data['line_items']  # Extract the line_items from the request data
-
-            session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=line_items,
-            mode='payment',
-            success_url='http://localhost:3000/success',
-            cancel_url='http://localhost:3000/cancel',
-        )
-            return jsonify({'id': session.id})
-        except Exception as e:
-            return jsonify({'error': str(e)}), 403
-    
-
-    @app.route('/create-paypal-payment', methods=['POST'])
-    def create_paypal_payment():
-        try:
             data = request.get_json()
-            total_amount = data['total_amount']
-            return_url = "http://localhost:3000/success"
-            cancel_url = "http://localhost:3000/cancel"
-
-            payment = paypalrestsdk.Payment({
-                "intent": "sale",
-                "payer": {
-                    "payment_method": "paypal"
-                },
-                "redirect_urls": {
-                    "return_url": return_url,
-                    "cancel_url": cancel_url
-                },
-                "transactions": [{
-                    "item_list": {
-                        "items": [{
-                            "name": "Paint",
-                            "sku": "item",
-                            "price": total_amount,
-                            "currency": "KES",
-                            "quantity": 1
-                        }]
-                    },
-                    "amount": {
-                        "total": total_amount,
-                        "currency": "USD"
-                    },
-                    "description": "Paint Purchase"
-                }]
-            })
-
-            if payment.create():
-                approval_url = next(link.href for link in payment.links if link.rel == "approval_url")
-                return jsonify({"approval_url": approval_url}), 200
-            else:
-                return jsonify({"error": payment.error}), 400
+            # Stripe checkout session creation logic here
+            # Example:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=data['line_items'],
+                mode='payment',
+                success_url='http://localhost:3000/success',
+                cancel_url='http://localhost:3000/',
+            )
+            return jsonify({'id': checkout_session.id})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
-    @app.route('/execute-paypal-payment', methods=['POST'])
-    def execute_paypal_payment():
-        try:
-            data = request.get_json()
-            payment_id = data['payment_id']
-            payer_id = data['payer_id']
+    @app.route('/stripe-success', methods=['POST'])
+    def stripe_success():
+        data = request.get_json()
+        session_id = data.get('session_id')
+        if session_id:
+           clear_cart()  # Clear cart after successful payment
+           return jsonify({"message": "Payment successful"}), 200
+        return jsonify({"error": "Payment failed"}), 400
 
-            payment = paypalrestsdk.Payment.find(payment_id)
-            if payment.execute({"payer_id": payer_id}):
-                # Payment executed successfully, handle order creation here
-                return jsonify({"message": "Payment executed successfully"}), 200
-            else:
-                return jsonify({"error": payment.error}), 400
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
+
+    @app.route('/stripe-cancel', methods=['GET'])
+    def stripe_cancel():
+    # Handle Stripe payment cancellation
+        return jsonify({"message": "Payment cancelled"}), 200
+
+    def clear_cart():
+        session.pop('cart', None)
+        session.modified = True
+        return jsonify({"message": "Cart cleared successfully"}), 200
+
+
+    @app.route('/clear-cart', methods=['POST'])
+    def clear_cart():
+        # Implement this function to clear the cart from the session
+        session.pop('cart', None)
+        session.modified = True
+        return jsonify({"message": "Cart cleared successfully"}), 200
+
+
+   
+
+    @app.route('/paypal/success', methods=['POST'])
+    def paypal_success():
+        # Handle PayPal payment success
+        data = request.get_json()
+        if 'payment_id' in data:
+            # Clear the cart after successful payment
+            clear_cart()  # Implement this function to clear the cart from the session
+            return jsonify({"message": "Payment successful"}), 200
+        return jsonify({"error": "Payment failed"}), 400
+
+    @app.route('/paypal/cancel', methods=['POST'])
+    def paypal_cancel():
+        # Handle PayPal payment cancellation
+        return jsonify({"message": "Payment cancelled"}), 200
+
 
     return app
-
-
-
-
-    return app
-
-
-if __name__ == '__main__':
-    app = create_app()
-    with app.app_context():
-        db.create_all()  # Ensure the database and tables are created
-    app.run(debug=True)

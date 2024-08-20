@@ -1,10 +1,7 @@
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
-
 /* Navbar Styles */
 nav {
   background-color: #333;
@@ -118,4 +115,42 @@ main {
 
 .product-card button:hover {
   background-color: #0056b3;
+}
+.hero-section {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif; /* Fallback to Roboto if Helvetica is not available */
+  text-align: center;
+  padding: 20px; /* Adjust padding as needed */
+}
+
+.hero-section h1 {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-size: 2.5rem; /* Adjust font size as needed */
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-description {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-size: 1rem; /* Adjust font size as needed */
+  color: #555; /* Light grey color for the text */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  max-width: 800px; /* Adjust as needed */
+  line-height: 1.6;
+}
+
+.shop-now-button {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-size: 1rem; /* Adjust font size as needed */
+  padding: 10px 20px;
+  background-color: #007bff; /* Button color */
+  color: #fff; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.shop-now-button:hover {
+  background-color: #0056b3; /* Darker button color on hover */
 }

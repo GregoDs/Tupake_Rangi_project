@@ -1,15 +1,30 @@
+/* Base styles for the navbar */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(104, 27, 27, 0.8); /* Slight transparency */
+  z-index: 1000; /* Ensure it overlays other content */
+  padding: 8px 16px; /* Reduced padding */
+  font-family: 'Helvetica'; /* Apply Helvetica font */
+}
+
 .navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #333;
-  color: #fff;
 }
 
-.navbar-container h1 a {
-  color: #fff;
-  text-decoration: none;
+.navbar-logo {
+  height: 40px; /* Reduced height */
+  width: auto;
+  cursor: pointer;
+}
+
+.navbar-container h1 {
+  margin: 0;
+  color: white;
+  font-size: 20px; /* Reduced font size */
 }
 
 .nav-links {
@@ -19,96 +34,112 @@
 }
 
 .nav-links li {
-  margin: 0 1rem;
+  margin: 0 8px; /* Reduced margin */
+  position: relative;
 }
 
 .nav-links a {
-  color: #fff;
+  color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 14px; /* Reduced font size */
+  padding: 6px 10px; /* Reduced padding */
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.cart {
-  position: relative;
+.nav-links a:hover {
+  background-color: white;
+  color: black;
+  border-radius: 4px;
 }
 
+/* Cart Icon */
 .cart-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px; /* Reduced width */
+  height: 20px; /* Reduced height */
+  transition: transform 0.3s ease;
+}
+
+.cart:hover .cart-icon {
+  transform: scale(1.2);
 }
 
 .cart-count {
-  position: absolute;
-  top: -5px;
-  right: -10px;
   background-color: red;
   color: white;
   border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.8rem;
+  padding: 2px 5px; /* Reduced padding */
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-size: 10px; /* Reduced font size */
 }
 
-.dropdown {
-  position: relative;
-}
-
-.user-info {
+/* Dropdown styles */
+.dropdown .user-info, .login-register {
   display: flex;
   align-items: center;
-  cursor: pointer;
-}
-
-.profile-icon {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.username {
-  margin-left: 8px;
-  font-size: 1rem;
-  color: #fff;
-}
-
-.login-register {
   background-color: transparent;
   border: none;
   color: white;
+  font-size: 14px; /* Reduced font size */
   cursor: pointer;
-  font-size: 1rem;
+  padding: 6px 10px; /* Reduced padding */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown .user-info:hover, .login-register:hover {
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+}
+
+.profile-icon {
+  width: 25px; /* Reduced width */
+  height: 25px; /* Reduced height */
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.username {
+  font-weight: bold;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 40px;
+  top: 100%;
   right: 0;
-  background-color: #444;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style: none;
+  padding: 8px 0; /* Reduced padding */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
 }
 
 .dropdown-menu li {
-  list-style: none;
-  padding: 10px;
-  text-align: center;
+  margin: 0;
 }
 
-.dropdown-menu li a, 
-.dropdown-menu li button {
-  color: white;
+.dropdown-menu li a, .dropdown-menu li button {
+  color: black;
+  padding: 6px 15px; /* Reduced padding */
+  text-align: left;
   text-decoration: none;
-  background: none;
+  background-color: transparent;
   border: none;
-  font-size: 1rem;
-  cursor: pointer;
   width: 100%;
-  padding: 10px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-menu li button:hover,
-.dropdown-menu li a:hover {
-  background-color: #555;
+.dropdown-menu li a:hover, .dropdown-menu li button:hover {
+  background-color: #f0f0f0;
+  color: black;
+}
+
+/* Padding for the content to ensure it's not hidden under the navbar */
+body {
+  padding-top: 60px; /* Adjust this value if your navbar height changes */
 }

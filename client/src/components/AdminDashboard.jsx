@@ -3,7 +3,7 @@ import axios from '../api/axios'; // Import your Axios instance
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import Navbar from './Navbar';
 import Footer from './Footer';
-
+import './AdminDashboard.css'; // Import the CSS file
 
 function AdminDashboard() {
   const [name, setName] = useState('');
@@ -102,65 +102,69 @@ function AdminDashboard() {
   };
 
   return (
-    <div>
-       <Navbar />
-      <h2>Admin Dashboard</h2>
-      <form onSubmit={selectedPaint ? handleUpdatePaint : handleAddPaint}>
-        <div>
-          <label>Product Name:</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label>Price:</label>
-          <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} required />
-        </div>
-        <div>
-          <label>Size:</label>
-          <input type="text" value={size} onChange={(e) => setSize(e.target.value)} required />
-        </div>
-        <div>
-          <label>Color:</label>
-          <input type="text" value={color} onChange={(e) => setColor(e.target.value)} required />
-        </div>
-        <div>
-          <label>Availability:</label>
-          <input type="checkbox" checked={availability} onChange={(e) => setAvailability(e.target.checked)} />
-        </div>
-        <div>
-          <label>Category:</label>
-          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
-            <option value="">Select a category</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.description}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Image URL:</label>
-          <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-        </div>
-        <button type="submit">{selectedPaint ? 'Update Product' : 'Add Product'}</button>
-      </form>
+    <div className="admin-dashboard">
+      <Navbar />
+      <main>
+        <h2>Admin Dashboard</h2>
+        <form onSubmit={selectedPaint ? handleUpdatePaint : handleAddPaint} className="paint-form">
+          <div className="form-group">
+            <label>Product Name:</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+          <div className="form-group">
+            <label>Price:</label>
+            <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} required />
+          </div>
+          <div className="form-group">
+            <label>Size:</label>
+            <input type="text" value={size} onChange={(e) => setSize(e.target.value)} required />
+          </div>
+          <div className="form-group">
+            <label>Color:</label>
+            <input type="text" value={color} onChange={(e) => setColor(e.target.value)} required />
+          </div>
+          <div className="form-group">
+            <label>Availability:</label>
+            <input type="checkbox" checked={availability} onChange={(e) => setAvailability(e.target.checked)} />
+          </div>
+          <div className="form-group">
+            <label>Category:</label>
+            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+              <option value="">Select a category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.description}</option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Image URL:</label>
+            <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          </div>
+          <button type="submit" className="submit-button">
+            {selectedPaint ? 'Update Product' : 'Add Product'}
+          </button>
+        </form>
 
-      <h3>Existing Paints</h3>
-      <ul>
-        {paints && paints.map(paint => (
-          <li key={paint.id}>
-            {paint.name} - {paint.price}
-            <button onClick={() => {
-              setName(paint.name);
-              setPrice(paint.price);
-              setSize(paint.size);
-              setColor(paint.color);
-              setAvailability(paint.availability);
-              setCategoryId(paint.category_id);
-              setImageUrl(paint.image_url || '');
-              setSelectedPaint(paint);
-            }}>Edit</button>
-            <button onClick={() => handleDeletePaint(paint.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <h3>Existing Paints</h3>
+        <ul className="paint-list">
+          {paints.map(paint => (
+            <li key={paint.id} className="paint-item">
+              {paint.name} - ${paint.price}
+              <button onClick={() => {
+                setName(paint.name);
+                setPrice(paint.price);
+                setSize(paint.size);
+                setColor(paint.color);
+                setAvailability(paint.availability);
+                setCategoryId(paint.category_id);
+                setImageUrl(paint.image_url || '');
+                setSelectedPaint(paint);
+              }} className="edit-button">Edit</button>
+              <button onClick={() => handleDeletePaint(paint.id)} className="delete-button">Delete</button>
+            </li>
+          ))}
+        </ul>
+      </main>
       <Footer />
     </div>
   );

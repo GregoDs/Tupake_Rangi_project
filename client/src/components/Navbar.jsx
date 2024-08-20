@@ -50,7 +50,13 @@ function Navbar() {
   return (
     <nav>
       <div className="navbar-container">
-        <h1><Link to="/">Paint Shop</Link></h1>
+        <Link to="/">
+          <img 
+            src="https://dt-paintpros.myshopify.com/cdn/shop/files/logo_a162f414-bff7-4279-b3f9-f69a785e16df.png?v=1688451373&width=200" 
+            alt="Tupake Rangi Logo" 
+            className="navbar-logo"
+          />
+        </Link>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About Us</Link></li>

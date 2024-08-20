@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { loadStripe } from '@stripe/stripe-js';
 import './CartPage.css';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 const stripePromise = loadStripe('pk_test_51NhQVmGSMQUybJjfFioS46tXNREuyqoTkLZKmZnKHFYmTu7FaazoTJkAKqdIzlq883Hyu4EBk3UcpW8bxOkUdMyb00BDkAUU5X'); // Replace with your public key
 
@@ -56,6 +57,9 @@ function CartPage() {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
+  
+
+
   const handleStripeCheckout = async () => {
     try {
       const stripe = await stripePromise;
@@ -88,42 +92,6 @@ function CartPage() {
     }
   };
 
-  const handlePayPalCheckout = () => {
-    window.paypal.Buttons({
-      createOrder: (data, actions) => {
-        return actions.order.create({
-         "purchase_units": [{
-    "reference_id": "default",
-    "amount": {
-      "currency_code": "USD",
-      "value": "100.00"  // This should be the total amount of the order, not zero
-    },
-            items: cartItems.map(item => ({
-              name: item.name,
-              unit_amount: {
-                currency_code: 'USD',
-                value: item.price.toFixed(2),
-              },
-              quantity: item.quantity,
-            })),
-          }],
-        });
-      },
-      onApprove: async (data, actions) => {
-        await actions.order.capture();
-        // Handle successful payment here
-        console.log('Payment successful:', data);
-      },
-      onError: (err) => {
-        console.error('PayPal Checkout error:', err);
-      },
-    }).render('#paypal-button-container');
-  };
-
-  useEffect(() => {
-    handlePayPalCheckout(); // Render the PayPal button
-  }, [cartItems]);
-
   return (
     <>
       <Navbar />
@@ -153,7 +121,36 @@ function CartPage() {
           <p>Your cart is empty</p>
         )}
         <button onClick={handleStripeCheckout}>Checkout with Stripe</button>
-        <div id="paypal-button-container"></div>
+        <PayPalScriptProvider options={{ "client-id": "YOUR_CLIENT_ID" }}>
+          <PayPalButtons
+            createOrder={(data, actions) => {
+              return actions.order.create({
+                purchase_units: [{
+                  reference_id: "default",
+                  amount: {
+                    currency_code: "USD",
+                    value: '100.00',  // Total amount
+                  },
+                  items: cartItems.map(item => ({
+                    name: item.name,
+                    unit_amount: {
+                      currency_code: 'USD',
+                      value: item.price.toFixed(2),
+                    },
+                    quantity: item.quantity,
+                  })),
+                }],
+              });
+            }}
+            onApprove={async (data, actions) => {
+              await actions.order.capture();
+              console.log('Payment successful:', data);
+            }}
+            onError={(err) => {
+              console.error('PayPal Checkout error:', err);
+            }}
+          />
+        </PayPalScriptProvider>
       </main>
       <Footer />
     </>

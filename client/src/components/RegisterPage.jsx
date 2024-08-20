@@ -5,7 +5,6 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './RegisterPage.css';
 
-
 function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -29,32 +28,42 @@ function RegisterPage() {
   return (
     <div>
       <Navbar />
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          placeholder="Username" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          required 
-        />
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-        />
-        <button type="submit">Register</button>
-      </form>
-      <Footer />
+      <main>
+        <div className="main-container">
+          <h2>Register</h2>
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              placeholder="Username" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              required 
+            />
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+            
+            {/* Add this section */}
+            <div className="login-question">
+              <p>Already have an account? <a href="/login">Log in here</a></p>
+            </div>
+            
+            <button type="submit">Register</button>
+          </form>
+        </div>
+      </main>
+      <Footer className="footer" />
     </div>
   );
 }
